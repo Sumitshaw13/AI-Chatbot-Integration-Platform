@@ -22,5 +22,19 @@ This project is a web application built with Streamlit that combines AI-powered 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/tech-titans.git
-   cd tech-titans
+   https://github.com/Jyotish2002/PdfQuestions
+   cd PdfQuestions```
+2.Install the required dependencies:
+
+
+     pip install -r requirements.txt
+3. Run the application:
+   ```bash
+   streamlit run app.py
+### Usage
+- **Upload PDFs:** Upload one or more PDF documents, and click "Submit & Process" to extract text from them.
+- **Ask Questions:** Once the PDFs are processed, you can type in a question, and the AI will provide an answer based on the uploaded content.
+- **Chat with AI:** You can also ask general questions to the AI, and it will provide responses.
+- **View Question History:** You can check your past questions and answers stored in Firebase.
+- **Download Chat History:** You can save and download the entire chat history in .txt format.
+
