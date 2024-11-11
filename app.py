@@ -1,6 +1,5 @@
 import streamlit as st
-import firebase_admin
-from firebase_admin import credentials, db
+
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
