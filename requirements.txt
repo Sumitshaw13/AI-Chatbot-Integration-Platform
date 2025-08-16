@@ -6,4 +6,6 @@ langchain-community
 PyPDF2
 pyrebase4
 faiss-cpu
-langchain_google_genai
+langchain-google-genai
+requests==2.27.1
+urllib3==1.26.7
