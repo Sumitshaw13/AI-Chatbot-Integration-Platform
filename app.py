@@ -10,48 +10,19 @@ from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 import datetime
 import google.generativeai as genai
-import pyrebase
 
 # Load environment variables
 load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-firebase_api_key = os.getenv("FIREBASE_API_KEY")
 
-# Firebase configuration for Pyrebase
-firebase_config = {
-    "apiKey": firebase_api_key,
-    "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN"),
-    "databaseURL": os.getenv("FIREBASE_DATABASE_URL"),
-    "projectId": os.getenv("FIREBASE_PROJECT_ID"),
-    "storageBucket": os.getenv("FIREBASE_STORAGE_BUCKET"),
-    "messagingSenderId": os.getenv("FIREBASE_MESSAGING_SENDER_ID"),
-    "appId": os.getenv("FIREBASE_APP_ID"),
-}
-
-# Initialize Pyrebase
-firebase = pyrebase.initialize_app(firebase_config)
-auth_pyrebase = firebase.auth()
-
-# Initialize Firebase Realtime Database without Firebase Admin SDK login
+# Placeholder for logging question and answer
 def log_question_answer(user_id, question, answer):
-    try:
-        ref = db.reference(f'question_answer_history/{user_id}')
-        ref.push({
-            'question': question,
-            'answer': answer,
-            'timestamp': datetime.datetime.now().isoformat()
-        })
-    except Exception as e:
-        print(f"Error logging question and answer: {str(e)}")
+    # Implement with your preferred backend or leave as pass
+    pass
 
 def get_question_answer_history(user_id):
-    try:
-        ref = db.reference(f'question_answer_history/{user_id}')
-        history = ref.order_by_child('timestamp').get()
-        return history
-    except Exception as e:
-        print(f"Error retrieving question-answer history: {str(e)}")
-        return {}
+    # Implement with your preferred backend or return empty
+    return {}
 
 # PDF and LangChain Functions
 def get_pdf_text(pdf_docs):
@@ -81,7 +52,7 @@ def get_conversational_chain():
 
     Answer:
     """
-    model = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.3)  # <-- fixed
+    model = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.3)
     prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
     return chain
@@ -109,7 +80,7 @@ def user_input(user_question, user_id):
         st.error(f"Error generating response: {e}")
 
 def get_gemini_response(question):
-    model = genai.GenerativeModel("gemini-2.0-flash")  # <-- fixed
+    model = genai.GenerativeModel("gemini-2.0-flash")
     chat = model.start_chat(history=[])
     response = chat.send_message(question, stream=True)
     return response
@@ -165,7 +136,7 @@ def main():
             response_text += chunk.text
         st.session_state['chat_history'].append(("Bot", response_text))
 
-        # Save chat history to Firebase
+        # Save chat history to backend (currently does nothing)
         log_question_answer(user_id, chat_input, response_text)
 
     # Collapsible chat history
